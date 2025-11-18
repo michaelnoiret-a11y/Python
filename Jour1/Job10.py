@@ -1,0 +1,2 @@
+montant_investisement=0
+taux_de_rendement_annuel=0
