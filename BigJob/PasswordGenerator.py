@@ -1,19 +1,44 @@
-"""#import random
-#import hashlib
+# Trouver syntaxe JSON pour ne pas écraser les données mais les joindre à la suite , choisir liste ou dictionnaire pour le recueil des mots de passe hachés
+#import os
+import random
+import hashlib
 
 majusculealphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 minusculealphabets = "abcdefghijklmnopqrstuvwxyz"
 caracteres_speciaux = "!@#$%^&*#"
 alphanumeriques = "0123456789"
-password = str(input("Saisir un mot de pass correspondant aux exigences de sécurité: "))
-for i in password:
-    if len(password) >= 8 and majusculealphabets in password == True and minusculealphabets in password ==  True and caracteres_speciaux in password == True and alphanumeriques in password == True:
+password = str(input("Saisir un mot de passe correspondant aux exigences de sécurité: "))
 
-        print("Mot de passe accepté")
-    
+while password :
+    if len(password) <= 8 and majusculealphabets not in password and caracteres_speciaux not in password and alphanumeriques not in password and minusculealphabets not in password:
+            print("Mot de passe ne convient pas aux exigences de sécurité à respecter, réessayer ")
+            password = str(input("Saisir un mot de pass correspondant aux exigences de sécurité: "))
+            print("Voulez-vous que je génère le mot de passe ? ")
+            if input() == "Y" or "y":
+                password = random.choices(majusculealphabets,minusculealphabets, caracteres_speciaux, alphanumeriques)
+            print(password)
+            if input() == "N" or "n":
+                print("Saisir un mot de passe correspondant aux exigences de sécurité: ")
+                password = str(input("Saisir un mot de passe correspondant aux exigences de sécurité: "))
     else:
-        print("Mot de passe ne convient pas aux exigences de sécurité à respecter, réessayer ")
+        print("Mot de passe accepté")
+        sha256 = hashlib.sha256(password.encode())
+        password_hash = sha256.hexdigest()
+        print(f"Hash:{password_hash}")
+        break
 
+
+# import hashlib
+# pwd = 'GeekPassword'
+# s = '5gz'
+
+# # Combine password and salt
+# pwd_salt = pwd + s
+# hashed = hashlib.sha256(pwd_salt.encode())
+# print(hashed.hexdigest())
+
+
+"""
 #Chat GPT exemple:
 caracteres_speciaux = "!@#$%^&*#"
 
@@ -40,7 +65,7 @@ while not mot_de_passe_valide(password):
 
 print("\n✅ Mot de passe accepté !")
 
-Exemple 2:"""
+Exemple 2:
 caracteres_speciaux = "!@#$%^&*#"
 
 password = input("Saisir un mot de passe correspondant aux exigences de sécurité : ")
@@ -70,7 +95,7 @@ if len(password) >= 8 and contient_min and contient_maj and contient_chiffre and
     print("Mot de passe accepté")
 else:
     print("Mot de passe ne convient pas aux exigences de sécurité.")
-"""
+Exemple 3:
 caracteres_speciaux = "!@#$%^&*#"
 
 def mot_de_passe_valide(password):
